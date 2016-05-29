@@ -58,7 +58,6 @@ describe('The cat API', () => {
       request('localhost:5000')
       .delete('/cat/' + testCat._id)
       .end((err, res) => {
-        console.log(testCat);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.text).to.eql('Poor kitty has run out of nine lives');
@@ -71,7 +70,6 @@ describe('The cat API', () => {
       .put('/cat/' + testCat._id)
       .send({ name: 'test' })
       .end((err, res) => {
-        console.log(testCat);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.text).to.eql('They must have nine lives!');

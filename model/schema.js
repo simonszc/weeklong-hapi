@@ -1,13 +1,12 @@
-//schema
-'use strict'
+'use strict';
 
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 const Kitty = new mongoose.Schema({
-  name: {type: String, unique: true},
+  name: { type: String, unique: true },
   breed: String,
   color: String,
   gender: String,
   quote: String
 });
 
-module.exports = mongoose.model('cat', Kitty)
+module.exports = mongoose.model('cat', Kitty);
