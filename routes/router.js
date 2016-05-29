@@ -38,7 +38,7 @@ module.exports = [{
   }
 }, {
   method: 'PUT',
-  path: '/cat/put/{catId}',
+  path: '/cat/{catId}',
   handler: function(request, reply) {
   Kitty.findOne({
     '_id': request.params.catId
