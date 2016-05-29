@@ -49,20 +49,29 @@ describe('The cat API', () => {
     beforeEach((done) => {
       let newCat = new Kitty({ name: 'test', gender: 'male' });
       newCat.save((err, kitty) => {
-          testCat = kitty;
-          done();
+        testCat = kitty;
+        done();
       });
-      // Kitty.create({ name: 'test-beforeEach' }, (err, data) => {
-      //   this.test = data;
-      // });
+    });
+
+    it('should be able to delete a cat', (done) => {
+      request('localhost:5000')
+      .delete('/cat/' + testCat._id)
+      .end((err, res) => {
+        console.log(testCat);
+        expect(err).to.eql(null);
+        expect(res).to.have.status(200);
+        expect(res.text).to.eql('Poor kitty has run out of nine lives');
+        done();
+      });
     });
 
     it('should be able to update a cat', (done) => {
       request('localhost:5000')
-      .put('/cat/' + testCat.catId)
+      .put('/cat/' + testCat._id)
       .send({ name: 'test' })
       .end((err, res) => {
-        console.log(err);
+        console.log(testCat);
         expect(err).to.eql(null);
         expect(res).to.have.status(200);
         expect(res.text).to.eql('They must have nine lives!');
@@ -70,4 +79,5 @@ describe('The cat API', () => {
       });
     });
   });
+  // debugger;
 });
