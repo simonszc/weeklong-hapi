@@ -39,25 +39,27 @@ module.exports = [{
 }, {
   method: 'PUT',
   path: '/cat/{catId}',
-  handler: function(request, reply) {
+  handler: function(req, res) {
   Kitty.findOne({
-    '_id': request.params.catId
+    _id: req.params.catId
   }, (err, cat) => {
     if (!err) {
       const name = cat.name;
-      member = request.payload;
+      cat = req.payload;
       Kitty.update({
-        _id: request.params.catId
-        }, member, (err) => {
+        _id: req.params.catId
+      }, cat, (err) => {
           if (!err) {
-            return reply(name + 'is still meowing and scratching');
-          }
-          return reply('They must have nine lives!');
+
+          return res('They must have nine lives!');
+        }
         });
       } else {
-        return reply.status(500);
+        console.log(err);
+        return res('Error on put');
       }
     });
+
   }
 }, {
   method:'DELETE',
