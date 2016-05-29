@@ -24,7 +24,7 @@ module.exports = [{
   path: '/cat',
   handler: function(req,res) {
     let newKitty = new Kitty(req.payload);
-    newKitty.save((err,res) => {
+    newKitty.save((err,data) => {
       if(err) {
         console.log(err)
         return res('Error on Post')
@@ -37,30 +37,31 @@ module.exports = [{
     })
   }
 }, {
-  method:'PUT',
-  path:'/cat/{catId}',
-  handler: function(req,res) {
-    Kitty.findOne({
-      '_id': req.params.catId
-    }, (err, cat) => {
+  method: 'PUT',
+  path: '/cat/put/{catId}',
+  handler: function(request, reply) {
+  Kitty.findOne({
+    '_id': request.params.catId
+  }, (err, cat) => {
+    if (!err) {
       const name = cat.name;
-      cat = req.payload;
+      member = request.payload;
       Kitty.update({
         _id: request.params.catId
-      }, cat, (err) => {
-        if(!err) {
-          return res(name + ' must have nine lives');
-        }
-        return res('lucky cat');
-      });
-    } else {
-      return res.status(500);
-    }
-  });
-
+        }, member, (err) => {
+          if (!err) {
+            return reply(name + 'is still meowing and scratching');
+          }
+          return reply('They must have nine lives!');
+        });
+      } else {
+        return reply.status(500);
+      }
+    });
+  }
 }, {
   method:'DELETE',
-  path:'/cat/{catId}'
+  path:'/cat/{catId}',
   handler: function(req,res) {
     Kitty.remove({
       _id: req.params.catId
@@ -72,5 +73,5 @@ module.exports = [{
       return res('Poor kitty has run out of nine lives')
     })
   }
-  
+
 }]
