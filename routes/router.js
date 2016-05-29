@@ -50,17 +50,16 @@ module.exports = [{
         _id: req.params.catId
       }, cat, (err) => {
           if (!err) {
-
-          return res('They must have nine lives!');
-        }
-        });
+            return res('They must have nine lives!');
       } else {
         console.log(err);
         return res('Error on put');
       }
-    });
+    })
+}
 
-  }
+})
+}
 }, {
   method:'DELETE',
   path:'/cat/{catId}',
